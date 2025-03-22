@@ -1,0 +1,61 @@
+.UserDadosModal{
+    width: 60%;
+    min-width: 280px;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    background-color: #444;
+    padding: 20px;
+    border-radius: 8px;
+    transition: .5s;
+}
+.UserDadosModal div{
+    font-size: 1.1rem;
+    background-color: #eee;
+    padding: 10px 20px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.textoP{
+    font-size: 1.4rem;
+    color: #444;
+}
+
+.UserDadosModal img{
+    width: 80%;
+}
+
+
+.ShowLivro{
+    transform: scale(1) !important;  
+}
+.AlterUserModalLivro{
+    position: fixed;
+    top: 50px;
+    left: calc(50% - 170px);
+    width: 280px;
+    height: fit-content;
+    max-height: 80vh;
+    background-color: #fff;
+    box-shadow: 0px 0px 10px 100vh #000000a6;
+    border-radius: 8px;
+    z-index: 100000;
+    padding: 32px;
+    display: flex;
+    transform: scale(0); 
+    transition: .4s;   
+    
+    overflow: scroll;
+}
+.AlterUserModalLivro input, .AlterUserModalLivro textarea {
+    width: calc(100% - 4px);
+    height: 38px;
+    margin-bottom: 8px;
+    background-color: #0000003b;
+    border: none;
+    border-radius: 4px;
+    padding: 0px 4px;
+}

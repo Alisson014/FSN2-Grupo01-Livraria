@@ -1,0 +1,54 @@
+@import url('https://fonts.googleapis.com/css2?family=Jersey+25&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Prata&display=swap');
+
+.t h1.titulo{
+    font-size: 2.6rem;
+}
+/* .titulo hr{
+    background-color: #382424;
+    height: 2px;
+    border: none;
+} */
+
+
+.LinkCard{
+    text-decoration: none;
+}
+
+.conteiner{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+.slider{
+    flex-shrink: 0;
+    margin-left: 40px;
+    width: 80%;
+    height: max-content;
+}
+.cardC{
+    transform: scaleY(2);
+    flex-shrink: 0;
+}
+.slider .card{
+    
+    margin: 5px;
+    flex-shrink: 0;
+}
+
+@media screen and (max-width: 550px){
+    
+    .t h1.title{
+        font-size: 3.4rem;
+    }
+}
+@media screen and (max-width: 380px){
+    .conteiner{
+        transform: translateX(10px);
+    }
+    .slider .card{
+        width: 90%;
+    }
+    .t h1.title{
+        font-size: 2.6rem;
+    }
+}

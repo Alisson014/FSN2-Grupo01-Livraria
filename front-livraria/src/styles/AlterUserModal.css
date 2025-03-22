@@ -1,0 +1,122 @@
+.ShowModalUser{
+    transform: scale(1) !important;
+    height: fit-content !important;
+}
+.ShowUpdate{
+    transform: translateX(0) !important;
+}
+.ShowDelete{
+    transform: translateX(-100%) !important;
+}
+.HideUpdate{
+    transform: translateX(-150%) !important;
+}
+.HideDelete{
+    transform: translateX(20%) !important;
+}
+
+
+.x{
+    position: absolute;
+    top: 30px;
+    left: calc(50% - 22px);
+    background-color: #eee;
+    width: 30px;
+    padding: 22px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50px;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: .4s;
+    z-index: 100000000;
+    color: #000;
+    box-shadow: 0px 0px 4px #0000006b;
+}
+.x:hover{
+    transform: scale(1.1);
+    transition: .4s;
+}
+
+.cModal{
+    transform: scale(0);
+    height: 0;
+    z-index: 1000000000;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    transition: .4s;
+}
+.AlterUserModal{
+    position: fixed;
+    top: 50px;
+    left: calc(50% - 170px);
+    width: 280px;
+    height: fit-content;
+    background-color: #fff;
+    box-shadow: 0px 0px 10px 100vh #000000a6;
+    border-radius: 8px;
+    z-index: 100000;
+    padding: 32px;
+    display: flex;
+    
+    overflow: hidden;
+}
+.UpdateUser, .DeleteUser{
+    flex-shrink: 0;
+    width: 100%;
+    transition: .3s;
+}
+
+.UpdateUser form, .DeleteUser form{
+    text-align: left;
+}
+.UpdateUser form input, .DeleteUser form input{
+    width: calc(100% - 4px);
+    height: 38px;
+    margin-bottom: 8px;
+    background-color: #0000003b;
+    border: none;
+    border-radius: 4px;
+    padding: 0px 4px;
+}
+.UpdateUser form label, .DeleteUser form label{
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+}
+.UpdateUser button, .DeleteUser button{
+    background-color: #c98c3d;
+    width: 45%;
+    border: none;
+    padding: 10px 2px;
+    border-radius: 50px;
+    font-size: 1.1rem;
+    color: #fff;
+    letter-spacing: 1px;
+    transition: .2s;
+    cursor: pointer;
+}
+.UpdateUser button:hover, .DeleteUser button:hover{
+    width: 55%;
+    padding: 10px 8px;
+    letter-spacing: 1.2px;
+    transition: .2s;
+}
+.altform{
+    font-size: 1rem;
+    color: #979797;
+    cursor: pointer;
+}
+.altform:hover{
+    text-decoration: underline;
+}
+.DeleteUser p:nth-last-child(3){
+    font-size: 1.4rem;
+    background-color: #c98c3db2;
+    padding: 5px 0px;
+    border-radius: 6px;
+}

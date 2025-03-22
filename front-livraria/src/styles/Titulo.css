@@ -1,0 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
+
+.titulo{
+    font-family: "Anton", sans-serif;
+    font-weight: 400;
+    color: #382d24;
+    font-size: 4rem;
+    text-transform: uppercase;
+}
+
+@media screen and (max-width: 440px){
+    .titulo{
+        font-size: 2rem !important;
+    }
+}

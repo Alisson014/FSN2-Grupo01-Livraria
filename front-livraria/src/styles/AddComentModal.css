@@ -1,0 +1,49 @@
+
+.ShowModal{
+    transform: scale(1) !important;
+}
+
+.ModalAddComent{
+    width: 300px;
+    height: fit-content;
+    background-color: #ddd;
+    text-align: left;
+    padding: 20px;
+    margin-left: calc(50% - 165px);
+    position: fixed;
+    top: 100px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px 100vh #000000bd;
+    transform: scale(0);
+    transition: .5s;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    z-index: 1000000;
+}
+
+.ModalAddComent form input{
+    width: calc(100% - 8px);
+    height: 38px;
+    padding: 0px 4px;
+    border: none;
+    margin: 5px 0px;
+    background-color: #fff;
+}
+.ModalAddComent textarea{
+    width: calc(100% - 8px);
+    padding: 4px;
+    border: none;
+    margin: 5px 0px;
+    background-color: #fff;
+}
+
+.CloseButton{
+    border: none;
+    border-bottom: 1px solid #000;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    font-size: 2rem;
+    cursor: pointer;
+    background-color: #ddd;
+}
