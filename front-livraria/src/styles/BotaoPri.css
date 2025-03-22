@@ -1,0 +1,24 @@
+
+.buttonPrimary{
+    background-color: #ffae00;
+    color: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+    padding: 12px 18px;
+    opacity: 0.9;
+    border-radius: 6px;
+    font-size: 1.3rem;
+    border: 3px solid #ffae00;
+    cursor: pointer;
+    transition: 0.6s;
+}
+.buttonPrimary:hover{
+    opacity: 1.5;
+    transition: 0.6s;
+}
+
+@media screen and (max-width: 450px){
+    .buttonPrimary{
+        font-size: 1rem;
+        padding: 8px 14px;
+    }
+}

@@ -1,0 +1,41 @@
+.BotaoVoltar{
+    width: 120px;
+    border: none;
+    background-color: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    cursor: pointer;
+    padding: 4px;
+    transition: .4s;
+    overflow: hidden;
+
+}
+.BotaoVoltar p{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 1.6rem;
+    font-weight: bold;
+    color: #ffae00;
+    z-index: 1;
+    transition: .4s;
+    transform: translateX(-100%);
+    visibility: hidden;
+}
+.BotaoVoltar svg{
+    fill: #ffae00;
+    z-index: 2;
+    transform: scale(1.1);
+    background-color: #fff;
+    padding: 8px;
+    border-radius: 50px;
+    overflow: visible;
+}
+
+.BotaoVoltar:hover p{
+    transform: translateX(0);
+    visibility: visible;
+}
+.BotaoVoltar p:hover{
+    text-decoration: underline;
+}
