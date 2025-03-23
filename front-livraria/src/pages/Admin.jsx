@@ -21,9 +21,11 @@ function Admin(){
     const LowercasePesquisaUser = typeof pesquisaUser === 'string' ? pesquisaUser.toLocaleLowerCase() : '';
     const usuarios = Clients.filter( c => c.nome.toLocaleLowerCase().includes(LowercasePesquisaUser) || c.email.toLocaleLowerCase().includes(LowercasePesquisaUser))
 
-function Showform(){
+    function Showform(){
         setform(!form);
     }
+    // const [file, setfile] = useState('');
+    
 
     return(
         <div>
@@ -33,6 +35,9 @@ function Showform(){
                 <h1>Adicionar Livro</h1>
                 
                 <form>
+                    <label htmlFor="imagem">Imagem: </label>
+                    <input accept="image/*" type="file" id="imagem" name="Imagem" required/>   
+
                     <label htmlFor="tituloC">Titulo: </label>
                     <input type="text" name="tituloC" id="tituloC" required />
                     
@@ -64,7 +69,7 @@ function Showform(){
             <div className="Gerenciamento">
                 <div className="Geren_Clientes">
                     <Titulo title='Usuários' />
-                    <input className="InputPesquisa" placeholder="&#8981;" type="text" id="pesquisa" name="pesquisa" value={pesquisaUser} onChange={(e) => setpesquisaUser(e.target.value)} />
+                    <input className="InputPesquisa" placeholder="&#8981;" type="text" id="pesquisaUser" name="pesquisaUser" value={pesquisaUser} onChange={(e) => setpesquisaUser(e.target.value)} />
                     <DadosUsers data={usuarios}/>   
 
                 </div>

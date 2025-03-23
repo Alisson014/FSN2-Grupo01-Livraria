@@ -2,13 +2,13 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 
-// import Pesquisa from './pages/Pesquisa';
+import Pesquisa from './pages/Pesquisa';
 import Home from './pages/Home';
-// import Admin from './pages/Admin';
-// import ValidarAdmin from './pages/ValidarAdmin';
-// import ViewDadosUser from './pages/ViewDadosUser';
-// import Livro from './pages/Livro';
-// import ViewDadosLivros from './pages/ViewDadosLivros';
+import Admin from './pages/Admin';
+import ValidarAdmin from './pages/ValidarAdmin';
+import ViewDadosUser from './pages/ViewDadosUser';
+import Livro from './pages/Livro';
+import ViewDadosLivros from './pages/ViewDadosLivros';
 
 import Header from './componentes/Header';
 import Footer from './componentes/Footer';
