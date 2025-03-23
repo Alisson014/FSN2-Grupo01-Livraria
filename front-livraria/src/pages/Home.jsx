@@ -1,4 +1,5 @@
 import React from "react";
+import { useState, useEffect } from "react";
 import '../styles/Home.css';
 
 
@@ -16,9 +17,86 @@ import ComentsData from "../assets/DataStatic/DataComents";
 import SomeBooks from '../assets/DataStatic/DataSomeBooks';
 
 
+import { fetchComentarios, adicionarComentario } from "../services/comentarioService";
+
 function Home(){
+    const [comentarios, setcomentarios] = useState([]);
+        const [id_cliente, setid_cliente] = useState(3);
+        const [nome, setnome] = useState('');
+        const [comentario, setcomentario] = useState('');
+    
+    const [mensageiro, setmensageiro] = useState(false);
+    const [mensagem, setmensagem] = useState('');
+
+    // useEffect( () => {
+    //     const carregarComentarios = async () => {
+    //         try{
+    //             const response = await fetchComentarios();
+    //             // console.log(comentarios);
+    //             setcomentarios( await response.data);
+    //         } catch(error){
+    //             setmensagem('Erro ao buscar comentários');
+    //         }
+    //     };
+    //     carregarComentarios();
+    // }, []);
 
     
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setid_cliente(4);
+      
+        if (!nome || !id_cliente || !comentario){
+          alert(`'Todos os campos são obrigatórios', ${nome}, ${id_cliente}, ${comentario}`);
+          return;	
+        }
+        console.log(`'Todos os campos são obrigatórios', ${nome}, ${id_cliente}, ${comentario}`);
+        
+        const novoComentario = {
+          id_cliente,
+          nome,
+          comentario,
+        }
+      
+        try {
+            await fetch('/comentarios', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(novoComentario),
+            });
+            
+            fetchComentarios();
+          } catch (error) {
+            console.error('Erro ao criar aluno', error);
+          }
+      
+        setnome('');
+        setcomentario('');
+        setid_cliente(null);
+    }
+
+
+    useEffect(() => {
+        fetchComentarios();
+    }, []);
+
+    const fetchComentarios = async () => {
+    try {
+        const response = await fetch('/comentarios'); 
+        const data = await response.json();
+        setcomentarios(data);
+    } catch (error) {
+        console.error('Erro ao buscar alunos', error);
+    }
+    };    
+
+
+    const [IsVisible , setIsvisible] = useState(false);
+
+    function Visibility(){
+        setIsvisible(!IsVisible);
+    }
 
     return(
         <div>
@@ -36,9 +114,16 @@ function Home(){
 
             <Categorias />
 
-            <Coments Data={ComentsData} />
+            <Coments Data={comentarios.reverse()} />
             <br/><br/>
-            <AddComent  />
+            <AddComent 
+                
+                handleSubmit={handleSubmit}
+                setnome={setnome}
+                setcomentario={setcomentario}
+                IsVisible={IsVisible}
+                Visibility={Visibility}
+            />
             <br/>
 
             <div className="cards-info">

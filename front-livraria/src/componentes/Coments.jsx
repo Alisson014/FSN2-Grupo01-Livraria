@@ -63,7 +63,7 @@ function Coments({Data}){
                     <CardComent
                         key={d.id}
                         nome={d.nome}
-                        comentario = {d.coment}
+                        comentario = {d.comentario}
                     />
                 ))}
             </Slider>

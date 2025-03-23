@@ -4,24 +4,22 @@ import '../styles/AddComentModal.css';
 
 import BotaoPri from "./BotaoPri";
 
-function AddComent(){
-    const [IsVisible , setIsvisible] = useState(false);
-
-    function Visibility(){
-        setIsvisible(!IsVisible);
-    }
+function AddComent({handleSubmit, setnome, setcomentario, IsVisible, Visibility}){
+    
 
     return(
         <div>
             <div className={`ModalAddComent ${ IsVisible ? 'ShowModal' : '' }`}>
                 <button className="CloseButton" type="button" onClick={ () => {Visibility()} } > X </button>
-                <form method="post">
+                <form method="post" onSubmit={handleSubmit}>
                     <label htmlFor='nome'>Nome: </label>
-                    <input id="nome" name="nome" type="text" required />
+                    <input onChange={(e) => setnome(e.target.value)} 
+                        id="nome" name="nome" type="text" required />
                     <label htmlFor="comentario" >Comentário: </label>
-                    <textarea rows={5} id="comentario" name="comentario" maxLength={220} required/>
+                    <textarea onChange={(e) => setcomentario(e.target.value)}
+                        rows={5} id="comentario" name="comentario" maxLength={220} required/>
                     <br/>
-                    <BotaoPri  label="Comentar" />
+                    <BotaoPri Click={() => {Visibility()}} label="Comentar" />
                 </form>
             </div>
 
