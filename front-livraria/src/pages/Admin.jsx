@@ -54,8 +54,6 @@ function Admin(){
             fetchLivros();
           } catch (error) {
             console.error('Erro ao adicionar livro', error);
-          } finally{
-            setformData({titulo: '', autor: '', preco: 0.0, quantidade_estoque: 0, descricao: '', resumo: '', categoria: '', data_publicacao: '', imagem_capa: ''});
           }
     }
 
@@ -159,7 +157,7 @@ function Admin(){
 
                     <label htmlFor="quantidadeC">Quantidade em estoque: </label>
                     <input onChange={ handleInputChange } defaultvaluevalue={formData.quantidade_estoque} 
-                    type="number" name="quantidade_estoque" id="quantidadeC" required />
+                    type="number" min={0} name="quantidade_estoque" id="quantidadeC" required />
 
                     <label htmlFor="descricoC">Descrição: </label>
                     <input onChange={ handleInputChange } defaultvaluevalue={formData.descricao}

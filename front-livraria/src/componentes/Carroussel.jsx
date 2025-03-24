@@ -92,7 +92,7 @@ function Carroussel({Data, titulo}){
                         key={d.id}
                         titulo={d.titulo}
                         descricao={d.descricao}
-                        imagem={d.imagem}
+                        imagem={d.imagem_capa}
                         preco={d.preco}
                     />
                     </Link>

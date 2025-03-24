@@ -24,6 +24,7 @@ function Home(){
         const [id_cliente, setid_cliente] = useState(1);
         const [nome, setnome] = useState('');
         const [comentario, setcomentario] = useState('');
+    const [livros, setlivros] = useState([]);
     
     const [mensageiro, setmensageiro] = useState(false);
     const [mensagem, setmensagem] = useState('');
@@ -42,7 +43,7 @@ function Home(){
     // }, []);
 
     
-
+    // Comentários
     const handleSubmit = async (e) => {
         e.preventDefault();
         // setid_cliente(4);
@@ -75,8 +76,6 @@ function Home(){
         setcomentario('');
         setid_cliente(1); //Alterar depois
     }
-
-
     useEffect(() => {
         fetchComentarios();
     }, []);
@@ -91,12 +90,28 @@ function Home(){
     }
     };    
 
-
+    // Livros
+    useEffect(() => {
+        fetchLivros();
+    }, []);
+    const fetchLivros = async () => {
+    try {
+        const response = await fetch('/api/livros'); 
+        const data = await response.json();
+        setlivros(data);
+    } catch (error) {
+        console.error('Erro ao buscar livros', error);
+    }
+    };
+    
+    
     const [IsVisible , setIsvisible] = useState(false);
 
     function Visibility(){
         setIsvisible(!IsVisible);
     }
+
+    const ultimosLivros = livros.reverse();
 
     return(
         <div>
@@ -110,7 +125,7 @@ function Home(){
             
             <Titulo title='Nossos livros mais recentes' />
             
-            <LatestBooks livros={SomeBooks}  />
+            <LatestBooks livros={ultimosLivros.slice(0,11)}  />
 
             <Categorias />
 

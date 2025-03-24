@@ -1,4 +1,5 @@
 import React from "react";
+import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import '../styles/Livros.css';
 
@@ -8,7 +9,22 @@ import BotaoPri from "../componentes/BotaoPri";
 
 function Livro(){
     const params = useParams();
-    const livro = General.find((l) => { return l.id === Number(params.id) });
+    const [livro, setlivro] = useState([]);
+    // const livro = General.find((l) => { return l.id === Number(params.id) });
+
+    useEffect(() => {
+            fetchLivro(Number(params.id));
+        }, [params.id]);
+    
+        const fetchLivro = async (id) => {
+            try {
+                const response = await fetch(`/api/livros/${id}`); 
+                const data = await response.json();
+                setlivro(data); 
+            } catch (error) {
+                console.error('Erro ao buscar livros', error);
+            }
+        };
 
     window.scrollTo({
         top: 0,
@@ -17,12 +33,12 @@ function Livro(){
 
     return(
         <div className="ConteinerLivro">
-            <img src={livro.imagem} alt='Imagem Livro' />
+            <img src={livro.imagem_capa} alt='Imagem Livro' />
             <div className="InformacoesLivro">
                 <Titulo title={livro.titulo} />
                 <div className="DadosLivro">
                     <p>Autor: {livro.autor} </p>
-                    <p>Pubicado em:  {livro.data_publicacao} </p>
+                    <p>Pubicado em:  {String(livro.data_publicacao).slice(0,10)} </p>
                     <p>Em estoque: {livro.quantidade_estoque} </p>
                     <p>R$ {livro.preco} </p>
                 </div>

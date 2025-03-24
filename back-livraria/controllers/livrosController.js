@@ -25,15 +25,37 @@ const livrosController = {
 
   async getById(req, res) {
     const { id } = req.params;
+    if (id !== 'GetCategorias' ) { 
+      try {
+        const livro = await LivrosModel.findById(Number(id));
+        if (!livro) return res.status(404).json({ error: 'Livro não encontrado' });
+        res.status(200).json(livro);
+      } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: error.message });
+      }
+    }else{
+      try{
+        const livros = await LivrosModel.findAll();
+        var categorias = [livros[0].categoria];
+        livros.forEach( l => {
+          if (!categorias.includes(l.categoria)) { categorias.push(l.categoria) }
+        });
+        var livrosCategorias = []; 
+        categorias.forEach( c => {
+          let lc = [];
+          livros.forEach( l => {
+            if (l.categoria === c ) { lc.push(l) }
+          });
+          livrosCategorias.push(lc);
+        });
+        res.status(200).json(livrosCategorias);
+  
+      } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: error.message });
+      }
 
-    try {
-      const livro = await LivrosModel.findById(Number(id));
-      if (!livro) return res.status(404).json({ error: 'Livro não encontrado' });
-      res.status(200).json(livro);
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: error.message });
-      console.log(id);
     }
   },
 
