@@ -13,24 +13,52 @@ function ViewDadosLivros(){
     const params = useParams();
     const [livro, setlivro] = useState([]);
     const [formData, setformData] = useState({titulo: '', autor: '', preco: 0.0, quantidade_estoque: 0, descricao: '', resumo: '', categoria: '', data_publicacao: '', imagem_capa: ''});
-    // setformData ({titulo: livro.titulo, autor: livro.autor, preco: Number(livro.preco), quantidade_estoque: Number(livro.quantidade_estoque), descricao: livro.descricao, resumo: livro.resumo, categoria: livro.categoria, data_publicacao: new Date(livro.data_publicacao).toLocaleDateString(), imagem_capa: livro.imagem_capa})
-    // const livro = General.find((l) => { return l.id === Number(params.id) });
+
+    // const livro = General.find((l) => { return l.id === Number(params.id) });{titulo: '', autor: '', preco: 0.0, quantidade_estoque: 0, descricao: '', resumo: '', categoria: '', data_publicacao: '', imagem_capa: ''}
     
 
     const [form, setform] = useState(false);
     function ShowEdit(){
         setform(!form);
+        // setformData(livro);
+        console.log( formData.autor,  Number(formData.quantidade_estoque));
     }
 
+    useEffect(() => {
+        fetchLivro(Number(params.id));
+    }, [params.id]);
+
+    // useEffect(() => {
+    //     handleInputChange();
+    // }, []);
+
+    const fetchLivro = async (id) => {
+        try {
+            const response = await fetch(`/api/livros/${id}`); 
+            const data = await response.json();
+            setlivro(data);
+            setformData(data);
+            
+        } catch (error) {
+            console.error('Erro ao buscar livros', error);
+        }
+    };
+
+
     const handleInputChange = (e) => {
+        // e.preventDefault();
         setformData({ ...formData, [e.target.name]: e.target.value });
+        console.log( e.target.value);
+        console.log( e.target.name);
+        console.log( formData.autor,  Number(formData.quantidade_estoque));
     };
 
     const handleSubmit = async (e) => {
+        handleInputChange(e);
         e.preventDefault();
-        // setid_cliente(4);
+        // setid_cliente(4);|| !formData.data_publicacao
       
-        if (!formData.titulo || !formData.autor || !formData.preco || !formData.quantidade_estoque || !formData.descricao || !formData.resumo || !formData.categoria || !formData.data_publicacao || !formData.imagem_capa){
+        if (!formData.titulo || !formData.autor || !formData.preco || !formData.quantidade_estoque || !formData.descricao || !formData.resumo || !formData.categoria  || !formData.imagem_capa){
           alert(`'Todos os campos são obrigatórios',  ${formData.titulo}, ${formData.autor}, ${formData.preco}, ${formData.quantidade_estoque}, ${formData.descricao}, ${formData.resumo}, ${formData.categoria}, ${formData.data_publicacao}, ${formData.imagem_capa}`);
           return;	
         }
@@ -49,35 +77,23 @@ function ViewDadosLivros(){
         // }
       
         try {
-            await fetch(`/api/livros/${Number(params.id)}`, {
+            await fetch(`/api/livros/${livro.id}`, {
               method: 'PUT',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify(formData),
             });
             
-            fetchLivro();
+            fetchLivro(livro.id);
+            alert('Livro atualizado com sucesso');
           } catch (error) {
             console.error('Erro ao adicionar livro', error);
           } finally{
-            setformData({titulo: '', autor: '', preco: 0.0, quantidade_estoque: 0, descricao: '', resumo: '', categoria: '', data_publicacao: '', imagem_capa: ''});
+            setformData(livro);
           }
    
-    }
-
-    useEffect(() => {
-        fetchLivro(Number(params.id));
-    }, []);
-
-    const fetchLivro = async (id) => {
-        try {
-            const response = await fetch(`/api/livros/${id}`); 
-            const data = await response.json();
-            setlivro(data);
-        } catch (error) {
-            console.error('Erro ao buscar livros', error);
-        }
     };
 
+    
 
     return(
         <div>    
@@ -88,42 +104,41 @@ function ViewDadosLivros(){
                 <h1>Atualizar Livro</h1>
                 
                 <form onSubmit={handleSubmit}>
-                <label htmlFor="imagem">Imagem: </label>
-                    <input onChange={handleInputChange } defaultvaluevalue={formData.imagem_capa}
-                     type="text" id="imagem" name="imagem_capa" placeholder="Digite a URL da imagem" required/>   
+                    <label htmlFor="imagemE">Imagem: </label>
+                    <input onChange={ handleInputChange } defaultValue={livro.imagem_capa}
+                     type="text" id="imagemE" name="imagem_capa" placeholder="Digite a URL da imagem" required/>   
 
-                    <label htmlFor="tituloC">Titulo: </label>
-                    <input onChange={ handleInputChange } defaultvaluevalue={formData.titulo}
-                     type="text" name="titulo" id="tituloC" required />
+                    <label htmlFor="tituloE">Titulo: </label>
+                    <input onChange={ handleInputChange } defaultValue={livro.titulo}
+                     type="text" name="titulo" id="tituloE" required />
 
-                    <label htmlFor="categoriaC">Categoria: </label>
-                    <input onChange={ handleInputChange } defaultvaluevalue={formData.categoria}
-                     type="text" name="categoria" id="categoriaC" required />
+                    <label htmlFor="categoriaE">Categoria: </label>
+                    <input onChange={ handleInputChange } defaultValue={livro.categoria}
+                     type="text" name="categoria" id="categoriaE" required />
                     
-                    <label htmlFor="autorC">Autor: </label>
-                    <input onChange={ handleInputChange } valdefaultvaluevalueue={formData.autor}
-                     type="text" name="autor" id="autorC" required />
+                    <label htmlFor="autorE">Autor: </label>
+                    <input onChange={ handleInputChange } defaultValue={livro.autor}
+                     type="text" name="autor" id="autorE" required />
 
-                    <label htmlFor="dataPubliC">Data Publicação: </label>
-                    <input onChange={ handleInputChange } defaultvaluevalue={formData.data_publicacao}
-                     type="date" name="data_publicacao" id="dataPubliC" required />
+                    {/* <label htmlFor="dataPubliE">Data Publicação: </label>
+                    <input onChange={ handleInputChange } defaultValue={livro.data_publicacao}
+                     type="date" name="data_publicacaoEdit" id="dataPubliE" required /> */}
 
-                    <label htmlFor="precoC">Preço: </label>
-                    <input onChange={ handleInputChange } defaultvaluevalue={formData.preco}
-                     type="number" min={0} step={0.01} name="preco" id="precoC" required />
+                    <label htmlFor="precoE">Preço: </label>
+                    <input onChange={ handleInputChange } defaultValue={livro.preco}
+                     type="number" min={0} step={0.01} name="preco" id="precoE" required />
 
-                    <label htmlFor="quantidadeC">Quantidade em estoque: </label>
-                    <input onChange={ handleInputChange } defaultvaluevalue={formData.quantidade_estoque} 
-                    type="number" name="quantidade_estoque" id="quantidadeC" required />
+                    <label htmlFor="quantidadeE">Quantidade em estoque: </label>
+                    <input onChange={ handleInputChange } defaultValue={livro.quantidade_estoque} 
+                    type="number" name="quantidade_estoque" id="quantidadeE" required />
 
-                    <label htmlFor="descricoC">Descrição: </label>
-                    <input onChange={ handleInputChange } defaultvaluevalue={formData.descricao}
-                     type="text" name="descricao" id="descricaoC" required />
+                    <label htmlFor="descricoE">Descrição: </label>
+                    <input onChange={ handleInputChange } defaultValue={livro.descricao}
+                     type="text" name="descricao" id="descricaoE" required />
 
-                    <label htmlFor="resumoC">Resumo: </label>
-                    <textarea onChange={ handleInputChange } defaultvaluevalue={formData.resumo}
-                     name="resumo" id="resumoC" required />
-
+                    <label htmlFor="resumoE">Resumo: </label>
+                    <textarea onChange={ handleInputChange } defaultValue={livro.resumo}
+                     name="resumo" id="resumoE" required />
 
                     <button onClick={ () => { ShowEdit() } } >Atualizar</button>
                 </form>
@@ -145,11 +160,11 @@ function ViewDadosLivros(){
                         <div><p>Id:</p>  <strong>{ livro.id }</strong> </div>
                         <div><p>Título:</p>  <strong>{ livro.titulo }</strong> </div>
                         <div><p>Autor:</p> <strong>{ livro.autor }</strong>  </div>
-                        <div><p>Data de Publicação:</p> <strong>{ livro.data_publicacao }</strong> </div>
+                        <div><p>Data de Publicação:</p> <strong>{ String(livro.data_publicacao).slice(0,10) }</strong> </div>
                         <div><p>Preço: </p> <strong>R${ livro.preco }</strong> </div>
                         <div><p>Quantidade Estoque:</p> <strong>{ livro.quantidade_estoque }</strong> </div>
                         <div><p>Descrição:</p> <strong>{ livro.descricao }</strong> </div>
-                        <div><p>Criado em:</p> <strong>{ livro.createdAt }</strong> </div>
+                        <div><p>Criado em:</p> <strong>{ String(livro.createdAt).slice(0,10) }</strong> </div>
                         <div style={{textAlign: 'justify'}}> <strong>{ livro.resumo }</strong> </div>
                         <BotaoPri label='Editar' Click={ () => { ShowEdit() } } />
                         {/* <p>Criado em: { livro.createdAt } </p> */}

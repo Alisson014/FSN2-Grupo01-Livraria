@@ -103,7 +103,22 @@ function Admin(){
         }
         };
     
-
+        const livrosP = livros.filter( l => l.titulo.toLocaleLowerCase().includes(LowercasePesquisa) || l.autor.toLocaleLowerCase().includes(LowercasePesquisa))
+    
+        const handleDelete = async (id) => {
+            if (window.confirm("Deseja remover este livro?")) {
+              try {
+                await fetch(`/api/livros/${id}`, {
+                  method: 'DELETE',
+                });
+                fetchLivros();
+                alert('Livro removido com sucesso');
+              } catch (error) {
+                console.error('Erro ao remover livro', error);
+              }
+            }
+          };
+    
     return(
         <div>
             <div className={`AlterUserModalLivro  ${form ? 'ShowLivro' : ''}`} >
@@ -170,7 +185,7 @@ function Admin(){
                     <BotaoPri label='Adicionar livro' Click={() => { Showform() }} />
                         {/* <h1 > &#8981; </h1> */}
                     <input className="InputPesquisa" placeholder="&#8981;" type="text" id="pesquisa" name="pesquisa" value={pesquisa} onChange={(e) => setpesquisa(e.target.value)} />
-                    <DadosLivros data={livros} />
+                    <DadosLivros data={livrosP} deleteL={ handleDelete } />
                 </div>
             </div>
         </div>

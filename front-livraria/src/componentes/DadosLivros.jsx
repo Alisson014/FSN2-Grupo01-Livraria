@@ -3,10 +3,10 @@ import '../styles/DadosGeren.css';
 import { Link } from "react-router-dom";
 // import Clients from "../assets/DataStatic/DataUser";
 
-function DadosLivros({data}){
-    function deletarUser(id){
-        window.confirm(`Você realmente deseja deletá-lo (${id})? Está ação não poderá ser  desfeita`);
-    }
+function DadosLivros({data, deleteL}){
+    // function deletarUser(id){
+    //     window.confirm(`Você realmente deseja deletá-lo (${id})? Está ação não poderá ser  desfeita`);
+    // }
 
     return(
         <div className="ContentDados">
@@ -19,7 +19,7 @@ function DadosLivros({data}){
 
                     <div className="acoes-dados">        
                         <Link to={`/admin/livro/${d.id}`}><button>Dados</button></Link>
-                        <button onClick={() => { deletarUser(d.id) }} >Remover</button>
+                        <button onClick={() => deleteL(d.id)} >Remover</button>
                     </div>
                     <div className="dados-r">
                         <button className="acoes-button">
@@ -30,7 +30,7 @@ function DadosLivros({data}){
 
                         <div className="acoes-dados-r">
                             <Link to={`/admin/livro/${d.id}`}><button>Dados</button></Link>
-                            <button onClick={() => { deletarUser(d.id) }} >Remover</button>
+                            <button onClick={() => deleteL(d.id)} >Remover</button>
                         </div>
                     </div>
                 </section>
