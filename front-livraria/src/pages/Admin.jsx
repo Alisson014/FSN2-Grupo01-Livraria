@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import '../styles/Admin.css';
 
 import Titulo from "../componentes/Titulo";
@@ -8,15 +8,27 @@ import DadosUsers from "../componentes/DadosUsers";
 import General from "../assets/DataStatic/DataGeneral";
 import DadosLivros from "../componentes/DadosLivros";
 import BotaoPri from "../componentes/BotaoPri";
+import { data } from "react-router-dom";
 
 
 function Admin(){
     const [form, setform] = useState(false);
     const [pesquisa, setpesquisa] = useState('');
     const [pesquisaUser, setpesquisaUser] = useState('');
+    const [livros, setlivros] = useState([]);
+    const [formData, setformData] = useState({titulo: '', autor: '', preco: 0.0, quantidade_estoque: 0, descricao: '', resumo: '', categoria: '', data_publicacao: '', imagem_capa: ''});
+        // const [titulo, settitulo] = useState('');
+        // const [autor, setautor] = useState('');
+        // const [preco, setpreco] = useState(0.0);
+        // const [quantidade_estoque, setquantidade_estoque] = useState(0);
+        // const [descricao, setdescricao] = useState('');
+        // const [resumo, setresumo] = useState('');
+        // const [categoria, setcategoria] = useState('');
+        // const [data_publicacao, setdata_publicacao] = useState();
+        // const [imagem_capa, setimagem_capa] = useState('');
 
     const LowercasePesquisa = typeof pesquisa === 'string' ? pesquisa.toLocaleLowerCase() : '';
-    const livros = General.filter( l => l.titulo.toLocaleLowerCase().includes(LowercasePesquisa) || l.autor.toLocaleLowerCase().includes(LowercasePesquisa))
+    // const livros = General.filter( l => l.titulo.toLocaleLowerCase().includes(LowercasePesquisa) || l.autor.toLocaleLowerCase().includes(LowercasePesquisa))
 // 
     const LowercasePesquisaUser = typeof pesquisaUser === 'string' ? pesquisaUser.toLocaleLowerCase() : '';
     const usuarios = Clients.filter( c => c.nome.toLocaleLowerCase().includes(LowercasePesquisaUser) || c.email.toLocaleLowerCase().includes(LowercasePesquisaUser))
@@ -24,7 +36,72 @@ function Admin(){
     function Showform(){
         setform(!form);
     }
-    // const [file, setfile] = useState('');
+    
+
+    const handleInputChange = (e) => {
+        setformData({ ...formData, [e.target.name]: e.target.value });
+      };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        // setid_cliente(4);
+      
+        if (!formData.titulo || !formData.autor || !formData.preco || !formData.quantidade_estoque || !formData.descricao || !formData.resumo || !formData.categoria || !formData.data_publicacao || !formData.imagem_capa){
+          alert(`'Todos os campos são obrigatórios',  ${formData.titulo}, ${formData.autor}, ${formData.preco}, ${formData.quantidade_estoque}, ${formData.descricao}, ${formData.resumo}, ${formData.categoria}, ${formData.data_publicacao}, ${formData.imagem_capa}`);
+          return;	
+        }
+        // console.log(`'Todos os campos são obrigatórios', ${nome}, ${id_cliente}, ${comentario}`);
+        
+        // const novoLivro = {
+        //   titulo,
+        //   autor,
+        //   preco,
+        //   quantidade_estoque,
+        //   descricao,
+        //   resumo,
+        //   categoria,
+        //   data_publicacao,
+        //   imagem_capa,
+        // }
+      
+        try {
+            await fetch('/api/livros', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(formData),
+            });
+            
+            fetchLivros();
+          } catch (error) {
+            console.error('Erro ao adicionar livro', error);
+          } finally{
+            setformData({titulo: '', autor: '', preco: 0.0, quantidade_estoque: 0, descricao: '', resumo: '', categoria: '', data_publicacao: '', imagem_capa: ''});
+          }
+      
+        // setautor('');
+        // setcategoria('');
+        // setdata_publicacao('');
+        // setimagem_capa('');
+        // setpreco(0.0);
+        // setquantidade_estoque(0);
+        // setresumo('');
+        // settitulo('');
+        
+    }
+
+    useEffect(() => {
+            fetchLivros();
+        }, []);
+    
+        const fetchLivros = async () => {
+        try {
+            const response = await fetch('/api/livros'); 
+            const data = await response.json();
+            setlivros(data);
+        } catch (error) {
+            console.error('Erro ao buscar livros', error);
+        }
+        };
     
 
     return(
@@ -34,32 +111,44 @@ function Admin(){
             <div className={`UpdateUser`}>
                 <h1>Adicionar Livro</h1>
                 
-                <form>
+                <form onSubmit={handleSubmit}>
                     <label htmlFor="imagem">Imagem: </label>
-                    <input accept="image/*" type="file" id="imagem" name="Imagem" required/>   
+                    <input onChange={handleInputChange } defaultvaluevalue={formData.imagem_capa}
+                     type="text" id="imagem" name="imagem_capa" placeholder="Digite a URL da imagem" required/>   
 
                     <label htmlFor="tituloC">Titulo: </label>
-                    <input type="text" name="tituloC" id="tituloC" required />
+                    <input onChange={ handleInputChange } defaultvaluevalue={formData.titulo}
+                     type="text" name="titulo" id="tituloC" required />
+
+                    <label htmlFor="categoriaC">Categoria: </label>
+                    <input onChange={ handleInputChange } defaultvaluevalue={formData.categoria}
+                     type="text" name="categoria" id="categoriaC" required />
                     
                     <label htmlFor="autorC">Autor: </label>
-                    <input type="text" name="autorC" id="autorC" required />
+                    <input onChange={ handleInputChange } valdefaultvaluevalueue={formData.autor}
+                     type="text" name="autor" id="autorC" required />
 
                     <label htmlFor="dataPubliC">Data Publicação: </label>
-                    <input type="text" name="dataPubliC" id="dataPubliC" required />
+                    <input onChange={ handleInputChange } defaultvaluevalue={formData.data_publicacao}
+                     type="date" name="data_publicacao" id="dataPubliC" required />
 
                     <label htmlFor="precoC">Preço: </label>
-                    <input type="number" min={0} step={0.01} name="precoC" id="precoC" required />
+                    <input onChange={ handleInputChange } defaultvaluevalue={formData.preco}
+                     type="number" min={0} step={0.01} name="preco" id="precoC" required />
 
                     <label htmlFor="quantidadeC">Quantidade em estoque: </label>
-                    <input type="number" name="quantidadeC" id="quantidadeC" required />
+                    <input onChange={ handleInputChange } defaultvaluevalue={formData.quantidade_estoque} 
+                    type="number" name="quantidade_estoque" id="quantidadeC" required />
 
                     <label htmlFor="descricoC">Descrição: </label>
-                    <input type="text" name="descricaoC" id="descricaoC" required />
+                    <input onChange={ handleInputChange } defaultvaluevalue={formData.descricao}
+                     type="text" name="descricao" id="descricaoC" required />
 
                     <label htmlFor="resumoC">Resumo: </label>
-                    <textarea name="resumoC" id="resumoC" required />
+                    <textarea onChange={ handleInputChange } defaultvaluevalue={formData.resumo}
+                     name="resumo" id="resumoC" required />
 
-                    <button>Adicionar</button>
+                    <button onClick={ () => { Showform() } } >Adicionar</button>
                 </form>
                 
             </div>

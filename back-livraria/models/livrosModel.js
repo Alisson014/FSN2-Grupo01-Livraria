@@ -11,7 +11,7 @@ const LivrosModel = {
   },
 
   async findById(id) {
-    return await prisma.livros.findUnique({ where: { id } });
+    return await prisma.livros.findUnique({ where: { id: Number(id), } });
   },
 
   async update(id, data) {

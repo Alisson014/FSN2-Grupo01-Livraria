@@ -8,7 +8,7 @@ export const General = [
         autor: 'J.R.R Tolkien',
         descricao: "Uma jornada inesperado pelo universo de Tolkien, junte-se a Bilbo e à compania.",
         preco: 50.00,
-        resumo: 'o livro segue a busca do hobbit caseiro Bilbo Bolseiro para conquistar uma parte do tesouro guardado pelo dragão Smaug. A jornada de Bilbo o leva de um ambiente rural alegre a um território mais sinistro. A história é contada na forma de uma busca episódica, e a maioria dos capítulos apresenta uma criatura específica, ou um tipo de criatura, das "Terras Ermas" de Tolkien. Ao aceitar o lado desonroso, romântico, feérico e aventureiro de sua natureza e aplicar sua inteligência e senso comum, Bilbo ganha um novo nível de competência, maturidade e sabedoria. A história atinge o seu clímax na Batalha dos Cinco Exércitos, onde muitos dos personagens e criaturas dos capítulos anteriores reemergem para se envolver no conflito.',
+        resumo: 'O livro segue a busca do hobbit caseiro Bilbo Bolseiro para conquistar uma parte do tesouro guardado pelo dragão Smaug. A jornada de Bilbo o leva de um ambiente rural alegre a um território mais sinistro. A história é contada na forma de uma busca episódica, e a maioria dos capítulos apresenta uma criatura específica, ou um tipo de criatura, das "Terras Ermas" de Tolkien. Ao aceitar o lado desonroso, romântico, feérico e aventureiro de sua natureza e aplicar sua inteligência e senso comum, Bilbo ganha um novo nível de competência, maturidade e sabedoria. A história atinge o seu clímax na Batalha dos Cinco Exércitos, onde muitos dos personagens e criaturas dos capítulos anteriores reemergem para se envolver no conflito.',
         imagem: img.L01,
         quantidade_estoque: 100,
         data_publicacao: '10/10/2010',

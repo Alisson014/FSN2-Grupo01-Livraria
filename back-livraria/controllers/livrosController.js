@@ -2,11 +2,14 @@ const LivrosModel = require('../models/livrosModel');
 
 const livrosController = {
   async create(req, res) {
-    const { titulo, autor, preco, quantidade_estoque, descricao, resumo, categoria, data_publicacao, imagem_capa } = req.body;
+    // const { titulo, autor, preco, quantidade_estoque, descricao, resumo, categoria, data_publicacao, imagem_capa } = req.body;
+    const dataLivro = req.body;
+    
     try {
-      const livro = await LivrosModel.create({ titulo, autor, preco, quantidade_estoque, descricao, resumo, categoria, data_publicacao, imagem_capa });
+      const livro = await LivrosModel.create({titulo: dataLivro.titulo, autor: dataLivro.autor, preco: Number(dataLivro.preco), quantidade_estoque: Number(dataLivro.quantidade_estoque), descricao: dataLivro.descricao, resumo: dataLivro.resumo, categoria: dataLivro.categoria, data_publicacao: new Date(dataLivro.data_publicacao).toLocaleDateString(), imagem_capa: dataLivro.imagem_capa});
       res.status(201).json(livro);
     } catch (error) {
+      console.error(error);
       res.status(500).json({ error: error.message });
     }
   },
@@ -22,12 +25,15 @@ const livrosController = {
 
   async getById(req, res) {
     const { id } = req.params;
+
     try {
       const livro = await LivrosModel.findById(Number(id));
       if (!livro) return res.status(404).json({ error: 'Livro não encontrado' });
       res.status(200).json(livro);
     } catch (error) {
+      console.error(error);
       res.status(500).json({ error: error.message });
+      console.log(id);
     }
   },
 

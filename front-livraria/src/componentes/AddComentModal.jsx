@@ -4,7 +4,7 @@ import '../styles/AddComentModal.css';
 
 import BotaoPri from "./BotaoPri";
 
-function AddComent({handleSubmit, setnome, setcomentario, IsVisible, Visibility}){
+function AddComent({handleSubmit, setnome, setcomentario, IsVisible, Visibility, nome, comentario}){
     
 
     return(
@@ -13,10 +13,10 @@ function AddComent({handleSubmit, setnome, setcomentario, IsVisible, Visibility}
                 <button className="CloseButton" type="button" onClick={ () => {Visibility()} } > X </button>
                 <form method="post" onSubmit={handleSubmit}>
                     <label htmlFor='nome'>Nome: </label>
-                    <input onChange={(e) => setnome(e.target.value)} 
+                    <input onChange={(e) => setnome(e.target.value)} value={nome}
                         id="nome" name="nome" type="text" required />
                     <label htmlFor="comentario" >Comentário: </label>
-                    <textarea onChange={(e) => setcomentario(e.target.value)}
+                    <textarea onChange={(e) => setcomentario(e.target.value)} value={comentario}
                         rows={5} id="comentario" name="comentario" maxLength={220} required/>
                     <br/>
                     <BotaoPri Click={() => {Visibility()}} label="Comentar" />

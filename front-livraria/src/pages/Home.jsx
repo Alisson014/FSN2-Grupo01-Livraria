@@ -21,7 +21,7 @@ import { fetchComentarios, adicionarComentario } from "../services/comentarioSer
 
 function Home(){
     const [comentarios, setcomentarios] = useState([]);
-        const [id_cliente, setid_cliente] = useState(3);
+        const [id_cliente, setid_cliente] = useState(1);
         const [nome, setnome] = useState('');
         const [comentario, setcomentario] = useState('');
     
@@ -45,13 +45,13 @@ function Home(){
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setid_cliente(4);
+        // setid_cliente(4);
       
-        if (!nome || !id_cliente || !comentario){
+        if (!nome || isNaN(id_cliente) || !comentario){
           alert(`'Todos os campos são obrigatórios', ${nome}, ${id_cliente}, ${comentario}`);
           return;	
         }
-        console.log(`'Todos os campos são obrigatórios', ${nome}, ${id_cliente}, ${comentario}`);
+        // console.log(`'Todos os campos são obrigatórios', ${nome}, ${id_cliente}, ${comentario}`);
         
         const novoComentario = {
           id_cliente,
@@ -60,20 +60,20 @@ function Home(){
         }
       
         try {
-            await fetch('/comentarios', {
+            await fetch('/api/comentarios', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify(novoComentario),
+              body: JSON.stringify({id_cliente, nome, comentario}),
             });
             
             fetchComentarios();
           } catch (error) {
-            console.error('Erro ao criar aluno', error);
+            console.error('Erro ao comentar', error);
           }
       
         setnome('');
         setcomentario('');
-        setid_cliente(null);
+        setid_cliente(1); //Alterar depois
     }
 
 
@@ -83,11 +83,11 @@ function Home(){
 
     const fetchComentarios = async () => {
     try {
-        const response = await fetch('/comentarios'); 
+        const response = await fetch('/api/comentarios'); 
         const data = await response.json();
         setcomentarios(data);
     } catch (error) {
-        console.error('Erro ao buscar alunos', error);
+        console.error('Erro ao buscar livros', error);
     }
     };    
 
@@ -117,7 +117,8 @@ function Home(){
             <Coments Data={comentarios.reverse()} />
             <br/><br/>
             <AddComent 
-                
+                nome={nome}
+                comentario={comentario}
                 handleSubmit={handleSubmit}
                 setnome={setnome}
                 setcomentario={setcomentario}

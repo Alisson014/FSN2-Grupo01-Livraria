@@ -1,12 +1,13 @@
 const ComentariosModel = require('../models/comentariosModel');
-
+// save point
 const comentariosController = {
   async create(req, res) {
-    const { comentario, id_cliente } = req.body;
+    const { id_cliente, nome, comentario } = req.body;
     try {
-      const comentarioCriado = await ComentariosModel.create({ comentario, id_cliente });
+      const comentarioCriado = await ComentariosModel.create({ id_cliente: Number(id_cliente), nome, comentario });
       res.status(201).json(comentarioCriado);
     } catch (error) {
+      console.error(error);
       res.status(500).json({ error: error.message });
     }
   },
