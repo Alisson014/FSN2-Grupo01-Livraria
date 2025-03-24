@@ -28,10 +28,6 @@ function ViewDadosLivros(){
         fetchLivro(Number(params.id));
     }, [params.id]);
 
-    // useEffect(() => {
-    //     handleInputChange();
-    // }, []);
-
     const fetchLivro = async (id) => {
         try {
             const response = await fetch(`/api/livros/${id}`); 
@@ -56,25 +52,13 @@ function ViewDadosLivros(){
     const handleSubmit = async (e) => {
         handleInputChange(e);
         e.preventDefault();
-        // setid_cliente(4);|| !formData.data_publicacao
+
       
         if (!formData.titulo || !formData.autor || !formData.preco || !formData.quantidade_estoque || !formData.descricao || !formData.resumo || !formData.categoria  || !formData.imagem_capa){
           alert(`'Todos os campos são obrigatórios',  ${formData.titulo}, ${formData.autor}, ${formData.preco}, ${formData.quantidade_estoque}, ${formData.descricao}, ${formData.resumo}, ${formData.categoria}, ${formData.data_publicacao}, ${formData.imagem_capa}`);
           return;	
         }
         // console.log(`'Todos os campos são obrigatórios', ${nome}, ${id_cliente}, ${comentario}`);
-        
-        // const novoLivro = {
-        //   titulo,
-        //   autor,
-        //   preco,
-        //   quantidade_estoque,
-        //   descricao,
-        //   resumo,
-        //   categoria,
-        //   data_publicacao,
-        //   imagem_capa,
-        // }
       
         try {
             await fetch(`/api/livros/${livro.id}`, {

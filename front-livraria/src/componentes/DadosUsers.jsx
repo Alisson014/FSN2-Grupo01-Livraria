@@ -5,7 +5,7 @@ import '../styles/DadosGeren.css';
 import { Link } from "react-router-dom";
 
 
-function DadosUsers({data}){
+function DadosUsers({data, deleteL}){
 
     function deletarUser(id){
         window.confirm(`Você realmente deseja deletá-lo (${id})? Está ação não poderá ser  desfeita`);
@@ -22,7 +22,7 @@ function DadosUsers({data}){
 
                     <div className="acoes-dados">        
                         <Link to={`/admin/usuario/${d.id}`}><button >Dados</button></Link>
-                        <button onClick={() => {deletarUser(d.id)}} >Remover</button>
+                        <button onClick={() => deleteL(d.id)} >Remover</button>
                     </div>
                     <div className="dados-r">
                         <button className="acoes-button">
@@ -33,7 +33,7 @@ function DadosUsers({data}){
 
                         <div className="acoes-dados-r">
                             <Link to={`/admin/usuario/${d.id}`}><button >Dados</button></Link>
-                            <button onClick={() => {deletarUser(d.id)}} >Remover</button>
+                            <button onClick={() => deleteL(d.id)} >Remover</button>
                         </div>
                     </div>
                 </section>
