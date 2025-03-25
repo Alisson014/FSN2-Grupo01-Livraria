@@ -14,20 +14,20 @@ function ViewDadosUser(){
     // const cliente = Clients.find((c) => { return c.id === Number(params.id) });
 
     useEffect(() => {
-            fetchCliente(Number(params.id));
-        }, [params.id]);
-    
-        const fetchCliente = async (id) => {
-            try {   
-                const response = await fetch(`/api/clientes/${id}`); 
-                const data = await response.json();
-                setcliente(data);
-                // setformData(data);
-                
-            } catch (error) {
-                console.error('Erro ao buscar cliente', error);
-            }
-        };
+        fetchCliente(Number(params.id));
+    }, [params.id]);
+
+    const fetchCliente = async (id) => {
+        try {   
+            const response = await fetch(`/api/clientes/${id}`); 
+            const data = await response.json();
+            setcliente(data);
+            // setformData(data);
+            
+        } catch (error) {
+            console.error('Erro ao buscar cliente', error);
+        }
+    };
 
     return(
         <div>

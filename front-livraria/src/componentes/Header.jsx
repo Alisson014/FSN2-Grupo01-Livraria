@@ -1,6 +1,6 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import { useState } from "react";
+import { Link, useParams } from "react-router-dom";
+import { useState, useEffect } from "react";
 import '../styles/Header.css';
 
 import img from '../assets/images/img';
@@ -11,18 +11,89 @@ import '../styles/ShopCart.css';
 import ShopCart from "./ShopCart";
 
 function Header(){
-
     const [IsActive, setIsActive] = useState(false);
-    
     function Activer(){
         setIsActive(!IsActive);
     }
-
     const [IsShopCart, setShopCart] = useState(false);
-
     function ActiverShopCart(){
         setShopCart( !IsShopCart );
     }
+    const [form, setform] = useState('update');
+    function ActiverF(){
+        form === 'update' ? setform('delete') : setform('update');
+    }
+
+    const params = useParams();
+    const [cliente, setcliente] = useState([]);;
+    const [nome, setnome] = useState('');
+    const [email, setemail] = useState('');
+    const [idade, setidade] = useState(0);
+    const [telefone, settelefone] = useState('');
+    const [endereco, setendereco] = useState('');
+    const [senha, setsenha] = useState('');
+
+    useEffect(() => {
+        fetchCliente(Number(params.id));
+    }, [params.id]);
+
+    const fetchCliente = async (id) => {
+        try {   
+            const response = await fetch(`/api/clientes/${id}`); 
+            const data = await response.json();
+      
+            if ( !data.nome ) {
+                window.location.assign('/');
+            }
+      
+            setcliente(data);
+            setnome(data.nome);
+            setemail(data.email);
+            setidade(data.idade);
+            settelefone(data.telefone);
+            setendereco(data.endereco);
+            setsenha(data.senha); 
+
+        } catch (error) {
+            console.error('Erro ao buscar cliente', error);
+        }
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+      
+        if (!nome || !email || !idade || !endereco || !telefone){
+          alert(`'Todos os campos são obrigatórios',  ${nome}, ${email}, ${idade}, ${telefone}, ${endereco}`);
+          return;	
+        }
+        
+        try {
+            await fetch(`/api/clientes/${cliente.id}`, {
+              method: 'PUT',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({nome, email, idade, endereco, telefone}),
+            });
+            
+            fetchCliente(cliente.id);
+            alert('Dados atualizados com sucesso');
+          } catch (error) {
+            console.error('Erro na atualização', error);
+          }
+    };
+
+    const handleDelete = async (id) => {
+        if (window.confirm("Realmente deseja deletar sua conta? Esta ação não poderá ser desfeita")) {
+            try {
+            await fetch(`/api/clientes/${id}`, {
+                method: 'DELETE',
+            });
+            window.location.assign('/');
+            } catch (error) {
+            console.error('Erro ao remover livro', error);
+            }
+        }
+    };
+    
 
     return (
         <div>
@@ -37,11 +108,7 @@ function Header(){
                     </div>
                 </a>
 
-                {/* <Link to="/" text="Home" cor="claro" />
-                <Link to="/OtherPage" text="OtherPage" cor="claro" />
-                <Link to="/OtherPage2" text="OtherPage2" cor="claro" /> */}
             </div>
-            {/* <MenuResponsive/> */}
 
             <div id="MenuDesk" className="cont-buttons">
                 <Link to={'/'}>
@@ -83,7 +150,28 @@ function Header(){
             </div>
         </header>
 
-        <AlterUserModal classN={`cModal  ${ IsActive ? 'ShowModalUser' : ''}`} disable={() => {Activer()}} />
+        <AlterUserModal 
+        nome={nome}
+        email={email}
+        endereco={endereco}
+        idade={idade}
+        telefone={telefone}
+        setnome={setnome}
+        setemail={setemail}
+        setidade={setidade}
+        settelefone={settelefone}
+        setendereco={setendereco}
+        form={form}
+        ActiverF={ActiverF}
+        submitUpdate={handleSubmit}
+        submitDelete={handleDelete}
+        id={cliente.id}
+        senha={senha}
+        setsenha={setsenha}
+        senhaV={cliente.senha}
+        emailV={cliente.email}
+
+        classN={`cModal  ${ IsActive ? 'ShowModalUser' : ''}`} disable={() => {Activer()}} />
         <ShopCart classN={ `ShopCart  ${ IsShopCart ? 'ShowShopCart' : ''}` } />
         </div>
     );

@@ -7,10 +7,6 @@ import { Link } from "react-router-dom";
 
 function DadosUsers({data, deleteL}){
 
-    function deletarUser(id){
-        window.confirm(`Você realmente deseja deletá-lo (${id})? Está ação não poderá ser  desfeita`);
-    }
-
     return(
          <div className="ContentDados">
             { data.map((d) => (
