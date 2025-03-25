@@ -25,7 +25,9 @@ model Vendas {
   id                Int      @id @default(autoincrement())
   data_realizada    DateTime @default(now())
   id_cliente        Int
-  id_livro         Int
+  id_livro          Int
+  id_livros         String
+  titulos           String
   quantidade_livros Int
   preco_final       Float
   cliente           Cliente  @relation("ClienteVendas", fields: [id_cliente], references: [id])

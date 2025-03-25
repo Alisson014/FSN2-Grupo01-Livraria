@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit';
-import getStoredState from 'redux-persist/es/getStoredState';
 
 const CarrinhoSlice = createSlice({
     name: "carrinho",

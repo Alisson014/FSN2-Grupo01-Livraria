@@ -1,5 +1,5 @@
 import React from "react";
-// import { useState } from "react";
+import { useState, useEffect } from "react";
 import '../styles/ShopCart.css';
 
 import SomeBooks from "../assets/DataStatic/DataSomeBooks";
@@ -7,10 +7,12 @@ import BotaoPri from "./BotaoPri";
 import ProductList from "./Productlist";
 
 import { useSelector, useDispatch } from 'react-redux'; 
-import { adicionar, remover } from '../context/CarrinhoSlice';
+import { remover } from '../context/CarrinhoSlice';
 
 function ShopCart({ classN }){
-
+    const [total, settotal] = useState(0);
+    const [idlivros, setidlivros] = useState('');
+    const [titulos, settitulos] = useState('');
     // const [quantidade, setquantidade] = useState(1);
     // function ComprarMenos(){
     //     if(quantidade === 1){
@@ -25,6 +27,36 @@ function ShopCart({ classN }){
     // }
     const cart = useSelector((state) => state.carrinho.produtos );
     const dispatch = useDispatch();
+
+    useEffect(() => {
+            updatetotal(cart);
+        }, [cart]);
+        function updatetotal(cart){
+            let s = 0;
+            let l = '';
+            let t = '';
+            cart.forEach( c => {
+                s += c.payload.preco;
+                l += c.payload.id;
+                t += c.payload.titulo;
+            });
+            setidlivros(l);
+            settotal(s);
+            settitulos(t);
+        }
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            await fetch('/api/vendas', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(cart),
+            });
+            
+          } catch (error) {
+            console.error('Erro ao adicionar livro', error);
+          }
+    }
 
     return(
         <div className={classN}>
@@ -64,6 +96,7 @@ function ShopCart({ classN }){
             
         
             <div className="FinalizarCompra" >
+                <h3 style={{color: "white"}} >Total: R$ {total.toFixed(2)} </h3>
                 <BotaoPri label='Finalizar Compra' />
             </div>
 
