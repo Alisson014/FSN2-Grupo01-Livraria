@@ -16,16 +16,19 @@ import EndLine from './componentes/EndLine';
 import './App.css';
 
 // import img from './assets/images/img';
+import Cart from './componentes/Cart';
+// import ProductList from './componentes/Productlist';
+import SomeBooks from './assets/DataStatic/DataSomeBooks';
 
 function App() {
   return (
     <div className="App">
       <Router>
         <Routes>
-          <Route path='/' element={ <ValidarAdmin/> } />
-          <Route path='/Home/:id' element={ <Home/> } />
-          <Route path='/Pesquisar' element={ <Pesquisa/> } />
-          <Route path='/Livro/:id' element={ <Livro/> } />
+          <Route path='/' element={ <Cart/> } />
+          <Route path='/Home/:idC' element={ <Home/> } />
+          <Route path='/Home/:idC/Pesquisar' element={ <Pesquisa/> } />
+          <Route path='/Home/:idC/Livro/:idL' element={ <Livro/> } />
           <Route path='/admin' element={ <Admin/> } />
           <Route path='/Validar' element={ <ValidarAdmin/> } />
           <Route path='/admin/usuario/:id' element={ <ViewDadosUser/> } />

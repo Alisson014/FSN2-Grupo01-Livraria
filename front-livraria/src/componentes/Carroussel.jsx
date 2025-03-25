@@ -1,4 +1,5 @@
 import React from "react";
+import { useParams } from "react-router-dom";
 import CardLivro from "./CardLivro";
 import Titulo from "./Titulo";
 
@@ -9,11 +10,16 @@ import "slick-carousel/slick/slick-theme.css";
 import '../styles/Carroussel.css';
 
 
-import {Link} from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux'; 
+import { adicionar } from '../context/CarrinhoSlice';
 
 
 
 function Carroussel({Data, titulo}){
+    const params = useParams(); 
+    const cart = useSelector((state) => state.carrinho.produtos );
+    const dispatch = useDispatch();
+
     function SampleNextArrow(props) {
         const { className, style, onClick } = props;
         return (
@@ -87,15 +93,20 @@ function Carroussel({Data, titulo}){
             <Slider {...settings}>
               
                 {Data.map((d) => (
-                  <Link to={`/Livro/${d.id}`} key={d.id} className="LinkCard">
+                  
                     <CardLivro className="cardC"
                         key={d.id}
+                        idL={d.id}
+                        idC={params.idC}
                         titulo={d.titulo}
                         descricao={d.descricao}
                         imagem={d.imagem_capa}
                         preco={d.preco}
+                        // book={d}
+
+                        // onAddToCart={ () => dispatch(adicionar())}
                     />
-                    </Link>
+                    
                 ))}
                 
             </Slider>

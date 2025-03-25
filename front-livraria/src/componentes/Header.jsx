@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import '../styles/Header.css';
 
@@ -9,8 +9,14 @@ import '../styles/AlterUserModal.css';
 import '../styles/ShopCart.css';
 
 import ShopCart from "./ShopCart";
+import { useSelector, useDispatch } from 'react-redux'; 
+import { adicionar } from '../context/CarrinhoSlice';
 
 function Header(){
+    const cart = useSelector((state) => state.carrinho.produtos );
+    const dispatch = useDispatch();
+
+
     const [IsActive, setIsActive] = useState(false);
     function Activer(){
         setIsActive(!IsActive);
@@ -33,16 +39,20 @@ function Header(){
     const [endereco, setendereco] = useState('');
     const [senha, setsenha] = useState('');
 
+    const location = useLocation();
+    const { hash, pathname, search } = location;
+
     useEffect(() => {
-        fetchCliente(Number(params.id));
-    }, [params.id]);
+        fetchCliente(Number(params.idC));
+    }, [params.idC]);
 
     const fetchCliente = async (id) => {
         try {   
+            // alert(id);
             const response = await fetch(`/api/clientes/${id}`); 
             const data = await response.json();
       
-            if ( !data.nome ) {
+            if ( !data.nome  ) {
                 window.location.assign('/');
             }
       
@@ -99,19 +109,19 @@ function Header(){
         <div>
         <header className="navbar">            
             <div className="menuLinks">
-                <a href="/" style={{textDecoration: 'none'}}> 
+                <Link to="/" style={{textDecoration: 'none'}}> 
                     <div className="logo">
                         <img src={ img.logo } alt="Logo-react"/>
                         <div className="Empresa">
                             <h1>Ressonância Literária</h1>
                         </div>
                     </div>
-                </a>
+                </Link>
 
             </div>
 
             <div id="MenuDesk" className="cont-buttons">
-                <Link to={'/'}>
+                <Link to={`/Home/${params.idC}`}>
                     <button className="buttons">
                         <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 16 16">
                             <path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L8 2.207l6.646 6.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293z"/>
@@ -129,7 +139,7 @@ function Header(){
                     </button>
                 </Link>
                 
-                <Link to={'/Pesquisar'}>
+                <Link to={`/Home/${params.idC}/Pesquisar`}>
                     <button className="buttons">
                         <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 16 16">
                             <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
@@ -144,7 +154,11 @@ function Header(){
                         </svg>
                     </button>
                 </Link>
-
+                <Link onClick={() => { ActiverShopCart() }}>
+                    <button className="buttons">
+                        <h3 style={{color: "white", fontSize: "rem"}} >{cart.length}</h3>
+                    </button>
+                </Link>
                 
                 
             </div>

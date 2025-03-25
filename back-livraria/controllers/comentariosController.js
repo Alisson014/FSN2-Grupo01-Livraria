@@ -1,5 +1,5 @@
 const ComentariosModel = require('../models/comentariosModel');
-// save point
+
 const comentariosController = {
   async create(req, res) {
     const { id_cliente, nome, comentario } = req.body;
