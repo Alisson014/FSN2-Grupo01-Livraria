@@ -55,6 +55,9 @@ function Header(){
             if ( !data.nome  ) {
                 window.location.assign('/');
             }
+            if ( data.senha === 'adm123' ){
+                window.location.assign(`/admin/${data.id}`);
+            }
       
             setcliente(data);
             setnome(data.nome);
@@ -112,8 +115,8 @@ function Header(){
                 <Link to="/" style={{textDecoration: 'none'}}> 
                     <div className="logo">
                         <img src={ img.logo } alt="Logo-react"/>
-                        <div className="Empresa">
-                            <h1>Ressonância Literária</h1>
+                        <div className="EmpresaL">
+                            <h1 style={{ color: '#ffae00' }} >Ressonância Literária</h1>
                         </div>
                     </div>
                 </Link>

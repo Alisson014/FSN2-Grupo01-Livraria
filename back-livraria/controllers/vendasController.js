@@ -2,11 +2,12 @@ const VendasModel = require('../models/vendasModel');
 
 const vendasController = {
   async create(req, res) {
-    const { id_cliente, id_livro, quantidade_livros, preco_final } = req.body;
+    const { id_cliente, id_livro, id_livros, titulos, quantidade_livros, preco_final } = req.body;
     try {
-      const venda = await VendasModel.create({ id_cliente, id_livro, quantidade_livros, preco_final });
+      const venda = await VendasModel.create({ id_cliente, id_livro, id_livros, titulos, quantidade_livros, preco_final });
       res.status(201).json(venda);
     } catch (error) {
+      console.error(error);
       res.status(500).json({ error: error.message });
     }
   },

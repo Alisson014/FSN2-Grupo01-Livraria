@@ -13,6 +13,10 @@ const ClienteModel = {
   async findById(id) {
     return await prisma.cliente.findUnique({ where: { id } });
   },
+  
+  async findByEmail(email){
+    return await prisma.cliente.findUnique({ where: { email } });
+  },
 
   async update(id, data) {
     return await prisma.cliente.update({ where: { id }, data });

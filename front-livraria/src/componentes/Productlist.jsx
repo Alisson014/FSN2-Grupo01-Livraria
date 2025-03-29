@@ -29,7 +29,7 @@ import '../styles/ShopCart.css';
                       
 const ProductList = ({ products, onAddToCart }) => {
     
-  console.log(products);
+  // console.log(products);
   return (
       <div className="ScrollContent">
         { products.map((product) => (

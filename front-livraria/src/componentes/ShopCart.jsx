@@ -1,4 +1,5 @@
 import React from "react";
+import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import '../styles/ShopCart.css';
 
@@ -10,6 +11,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { remover } from '../context/CarrinhoSlice';
 
 function ShopCart({ classN }){
+    const params = useParams();
     const [total, settotal] = useState(0);
     const [idlivros, setidlivros] = useState('');
     const [titulos, settitulos] = useState('');
@@ -37,8 +39,8 @@ function ShopCart({ classN }){
             let t = '';
             cart.forEach( c => {
                 s += c.payload.preco;
-                l += c.payload.id;
-                t += c.payload.titulo;
+                l += c.payload.id + ' - ';
+                t += c.payload.titulo + ' - ' ;
             });
             setidlivros(l);
             settotal(s);
@@ -50,8 +52,14 @@ function ShopCart({ classN }){
             await fetch('/api/vendas', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify(cart),
+              body: JSON.stringify({ id_cliente: Number(params.idC), id_livro: Number(params.idL), id_livros: idlivros, titulos: titulos, quantidade_livros: cart.length, preco_final: Number(total) }),
             });
+
+            cart.forEach(c => {
+                dispatch(remover(c.payload));
+            });
+            alert('Compra efetuada com sucesso');
+
             
           } catch (error) {
             console.error('Erro ao adicionar livro', error);
@@ -97,7 +105,7 @@ function ShopCart({ classN }){
         
             <div className="FinalizarCompra" >
                 <h3 style={{color: "white"}} >Total: R$ {total.toFixed(2)} </h3>
-                <BotaoPri label='Finalizar Compra' />
+                <BotaoPri Click={ handleSubmit } label='Finalizar Compra' />
             </div>
 
         </div>
